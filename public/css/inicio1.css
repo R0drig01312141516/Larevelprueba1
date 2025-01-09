@@ -1,0 +1,1956 @@
+/* Aqui definimos la Custom properties*/
+:root {
+  --color-primario: black;
+  --color-secundario: rgb(255, 255, 255);
+
+  /* Tiposgrafia */
+  --tipo-principal: Helvetica, Arial, sans-serif;
+  --tipo-secundario: Verdana;
+}
+
+/* Las adaptamos al modo oscuro*/
+/* Configuramos si in usuario  ha activado el  modo alto contraste (wd) */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primario: rgb(255, 255, 255);
+    --color-secundario: rgb(0, 0, 0);
+  }
+}
+
+/* opcional*/
+/* Desactivamos los animations en el caso de que el usurio haya configurado el modo*/
+
+@media (prefers-reduced-notion: reduce) {
+  * {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Reseteamos los margin y paddins de todas las etiquetas */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  vertical-align: baseline;
+}
+
+/* Evitamos problemas con las imagenes*/
+
+img,
+picture,
+video,
+iframe,
+figure {
+  max-width: 100%;
+  width: 100%;
+  display: block;
+  /* opcional*/
+  object-fit: cover;
+  /* opcional*/
+  object-position: center center;
+}
+
+/* Resetamos los enlaces para funcionar como cajas...*/
+a {
+  display: block;
+}
+
+/* ....exepto los que se encuentran en párrafos*/
+p a {
+  display: inline;
+}
+
+/* Quitamos los puntos de los <li>*/
+li {
+  list-style-type: none;
+}
+
+/* Configuramos anclas suaves*/
+html {
+  scroll-behavior: smooth;
+}
+/* Desactivamos estilos por defecto de las principales etiquetas de texto*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+strong,
+blockquote,
+i,
+b,
+u,
+em {
+  font-size: 1em;
+  font-weight: inherit;
+  font-style: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Evitamos problemas con pseudoelemntos de quotes*/
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+/* Configuramos el texto que seleccionamos */
+::selection {
+  background-color: var(--color-primario);
+  color: var(--color-secundario);
+}
+
+/* Nivelamos problemas de tipografias y colocacion de formularios */
+
+form,
+input,
+textarea,
+select,
+button,
+label {
+  font-family: inherit;
+  font-size: inherit;
+  hyphens: auto;
+  background-color: transparent;
+  display: block;
+  color: inherit;
+  /*opcional*/
+  appearance: none;
+}
+
+/* Reseteamos las tablas */
+table,
+tr,
+td {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* Evitamos problemas con los SVG*/
+svg {
+  width: 100%;
+  display: block;
+  fill: currentColor;
+}
+/* Configuramos la tipografia para toda la web*/
+body {
+  min-height: 100vh;
+  font-size: 100%;
+  font-family: var(--tipo-principal);
+  color: var(--color-secundario);
+
+  /*opcional*/
+  line-height: 1.4em;
+  /*opcional*/
+  hyphens: auto;
+  /*opcional*/
+  font-smooth: always;
+  /*opcional*/
+  -webkit-font-smoothing: antialiased;
+  /*opcional*/
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.header {
+  width: 100%;
+  background-color: rgb(3, 3, 3);
+  padding: none;
+  display: flex;
+  flex-flow: row wrap; /*version movil*/
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(232, 232, 232);
+  overflow: hidden;/*que nada sobresalga*/
+
+}
+
+
+
+.header h1 {
+  /* background-color:*/
+  margin: 0px  0px 0px 0px; /*superior ,derecha ,inferior, izquierda*/
+}
+
+.header .a {
+
+}
+
+.icon {
+  width: 230px;
+  transition: all 0.3s;
+}
+
+.icon:hover{
+  transform: scale(1.2);
+}
+
+
+
+
+.header .button {
+  /*background-color: brown;*/
+  display: none /*oculta */;
+
+}
+
+.header button svg {
+  width: 2em;
+  height: 2em;
+  fill: white;
+}
+.header .nav {
+  /*background-color: rgb(180, 100, 255);*/
+}
+
+.header nav ul {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header nav li {
+  margin: 0.9rem;
+}
+
+
+
+.containerh-item{
+  display: flex;
+  font-size: 1.4rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  align-items: center;
+}
+
+.containerh-item .h-items{
+  margin-top: 4px;
+  margin-left: 20px;
+display: flex;  
+
+
+
+}
+
+.containerh-item .h-items .span{
+font-size: 1.1rem;
+
+}
+
+.h-items1{
+  display: flex;
+  margin-left: 12px;
+  align-items: center;
+  text-align: center;
+
+}
+
+.h-items1 .h-itemsgo{
+  display: flex;
+  margin-left: 8px;
+  margin-right: 10px;
+position: relative;
+align-items: center;
+}
+
+
+
+.h-items1 .h-itemsgo a{
+font-size: 1.5rem;
+
+ 
+}
+
+.h-items1 .h-itemsgo span{
+  border-radius: 100%;
+  padding: 0rem 0.4rem 0rem 0.4rem;
+background-color: #ca042f;
+  font-size: 10px;
+position: absolute;
+  top:-65%;
+  left: 65%;
+}
+
+
+.h-items1 span{
+  text-align: center;
+  align-items: center;
+  font-size: 13px;
+}
+
+
+
+
+
+/* remplaso para el flexd */
+/*  */
+/*  */
+/*  */
+
+/* fin del remplazo de flex */
+/*  */
+/*  */
+/*  */
+/*  */
+
+
+.main .rojo {
+ text-align: center;
+align-items: center;
+background-color: #ca042ff5;
+justify-content: center; /* Centra horizontalmente */
+align-items: center; /* Centra verticalmente */background-color: #ca042ff5;
+justify-content: center; /* Centra horizontalmente */
+align-items: center; /* Centra verticalmente */
+
+}
+
+
+
+.rojo1{
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 10px;
+}
+
+.rojo1 img{
+  width: 40px;
+  align-items: center;
+
+
+}
+
+.rojo1 h2{
+   color: white; /* Color de texto blanco */
+  font-weight: bold;
+  font-size: 1em;
+  letter-spacing: 2px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  padding-left: 10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 480px) {
+  
+.header .button {
+    display: block ;/*mostrar boton*/
+    cursor: pointer;
+  }
+
+  .header .nav {
+    width: 100%;
+   /* display: none;*/
+    height: 0;
+    transition: all .5s ease;
+    overflow: hidden;
+    pointer-events: none;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .header .nav.activo{
+    /* display: block;*/
+    height: 50vh;
+    pointer-events: auto;
+  }
+
+
+
+  .header .ul{
+    flex-direction: column;
+  }
+  .header .li{
+    margin: 1rem 0;
+  }
+
+  .main .rojo{
+    transition: all .5s ease;
+    display: none;
+ 
+  }
+
+  .icon {
+    width: 230px;
+    pointer-events: none;/*sirve para bloquear*/
+  }
+
+
+
+
+}
+
+
+
+
+@media screen and (max-width: 1024px) {
+  .main .panelsecundario .a1 {
+    display: none;
+  }
+  
+  
+  .main .panelsecundario .a1  img {
+    display: none;
+  }  
+
+
+
+
+  /* aunlacion de animacion pera boton de añadir carrito */
+  
+
+  .productoboton .boton-p{
+    pointer-events: none;
+  }
+  
+  
+  .productoboton   .boton-p .pt{
+   pointer-events: none;
+    }
+
+    .productoboton   .boton-p svg{
+    pointer-events: none;
+       }
+
+
+
+       /* fin  */
+    
+        
+
+       /* empieza  */
+       
+       /*  */
+}
+
+
+
+
+
+
+.main .carrousel{
+  width: 100%;
+  max-width: 120em;
+  background-color: rgba(235, 255, 248, 0.962);
+  padding: 0em;
+  overflow: hidden;
+  }
+  
+  .main .carrousel .grande{
+  width: 200%;
+  /* background-color: orange; */
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0em;
+  
+  
+  transition: all.5s ease;
+  
+  transform: translateX(-50%);
+  
+  
+  
+  }
+  
+  
+  .main .carrousel .imgg{
+  width: calc(100% / 2 -2em);
+  background-color: lime;
+  min-height: 50vh;
+  }
+  
+  .main .carrousel .puntos{
+    width: 100%;
+    /* background-color: red; */
+    /* margin: 1em 0 0; */
+    padding: 0.2em;
+  
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row nowrap;
+  }
+  
+  
+  .main .carrousel .punto{
+  
+  width:1em;
+  height: 1em;
+  background-color: #ca042f98;
+  margin: 0em 0.5em 0;
+  border-radius: 100%;
+  }
+  
+  
+  
+  
+  .carrousel .punto.activoc{
+    background-color: #ca042f;
+    border-radius: 100%;
+  }
+  
+  
+
+
+
+
+
+
+
+
+ .main .panel{
+  background-color: #ffffff;
+  display: flex;
+  padding: 1em;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+.main .panel .imag{
+  display: flex;
+  /* margin: 1px; */
+  justify-content: center;
+}
+
+/* panel a */
+.main .panel .panela{
+ background-color: rgb(6, 10, 10);
+width: 70vh;
+overflow: hidden;
+margin: 1rem;
+}
+
+.main .panel .panela .apanel{
+  width: 100%;
+  height: 100%;
+}
+
+.main .panel .panela .imag{
+  background-color: rgb(0, 0, 0);
+
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  filter: brightness(70%); 
+transition: transform 0.5s ease, filter 0.5s ease;
+position: relative;
+
+
+}
+
+.main .panel .panela:hover .imag {
+  transform: scale(1.2);
+  filter: brightness(100%); }
+ 
+
+
+ .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0); /* Fondo oscuro con transparencia */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-text {
+  color: #fff; /* Texto blanco */
+  font-size: 2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: "Poppins", sans-serif;}
+
+
+
+
+
+/* panel b */
+
+.main .panel .panelb{
+  /* background-color: rgb(30, 144, 79); */
+  width: 40vh;
+  overflow: hidden;
+  justify-content: center;
+  flex-flow: wrap;
+  display: flex;
+  gap: 1rem;
+  margin:  1rem 1rem 1rem 0rem;
+
+}
+.main .panel .panelb .apanel1{
+width: 60rem;
+padding: none;
+margin: none;
+background-color: rgba(0, 0, 0, 0.959);
+
+}
+
+
+.apanel1 .imag{
+  transition: transform 0.3s ease, filter 0.4s ease;
+  filter: brightness(70%); 
+
+}
+
+ .apanel1:hover .imag{
+  transform: scale(1.2);
+  filter: brightness(100%); 
+ }
+
+
+
+ .main .panel .panelb .apanel2{
+  width: 60rem;
+  padding: none;
+  margin: none;
+  background-color: rgba(0, 0, 0, 0.959);
+  
+  }
+  
+  
+  .apanel2 .imag{
+    transition: transform 0.3s ease, filter 0.4s ease;
+    filter: brightness(70%); 
+  
+  
+  }
+  
+   .apanel2:hover .imag{
+    transform: scale(1.2);
+    filter: brightness(100%); 
+
+   }
+
+
+
+/* panel c */
+
+.main .panel .panelc{
+ /* background-color: aquamarine; */
+ width: 40vh;
+ overflow: hidden;
+ margin:  1rem 1rem 1rem 0rem;
+
+}
+
+.main .panel .panelc .apanel{
+
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+
+}
+
+.main .panel .panelc .imag{
+justify-content: center;
+  width: 100%;
+  height: 100%;
+transition: transform 0.5s ease, filter 0.4s ease;
+filter: brightness(70%); 
+}
+
+.main .panel .panelc:hover .imag{
+  transform: scale(1.2);
+  filter: brightness(100%); 
+ }
+
+
+
+/* panel secundario */
+
+.main .panelgeneral{
+  /* background-color: #ca042f; */
+  display: flex; 
+  justify-content: center;
+
+}
+
+/* panel secundario */
+
+.main .panelsecundario{ 
+  /* background-color: aqua; */
+  padding: none;
+  display: block;
+}
+
+/* conteneros de las imagenes y decoraciones */
+.main .panelsecundario .a1 {
+  /* background-color: antiquewhite;    */
+  margin-top: 1rem;
+  width: 17.3rem;
+  height: 25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.main .panelsecundario .a1  img {
+  background-color: rgb(0, 0, 0);   
+  margin-top: 2px;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;  /* Animación de agrandado suave */
+
+}
+
+.a1:hover img{
+  transform: scale(1.2);
+}
+
+.main .panelsecundario .a1 .text-sci{
+width: 100%;
+height: 100%;
+position: absolute;
+top: 0;
+left: 0;
+background-color: rgba(0, 0, 0, 0.555); /* Capa oscura semi-transparente */
+}
+  
+.main .panelsecundario .a1 .text-sci .text-ss {
+
+color: white;  
+font-size: 24px;
+text-align: center; 
+padding-top: 70%; 
+z-index: 1;      
+font-size: 35px;
+font-weight: 650;
+font-family: "Poppins", sans-serif;        
+}
+
+
+
+/* fin */
+
+/*fin de panel secundario */
+
+
+/* panel principal donde contine los elementos del principal */
+
+
+  .main .panelprincipanl{
+  /* background-color: blueviolet; */
+  width: 55rem;
+  flex-wrap: wrap;          /* Permite que los elementos bajen si desbordan */
+
+}
+
+
+
+
+.main .panelprincipanl .ppheader{
+margin-top: 1rem;
+/* background-color: #fc335f; */
+display:flex;
+justify-content: space-between;
+}
+
+.main .panelprincipanl .ppheader .pph3{
+  margin: 10px;
+  /* background-color: aqua; */
+  display: flex;
+
+
+
+}
+
+.main .panelprincipanl .ppheader .pph3 h3{
+  background-color: rgb(255, 255, 255);
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #cb0c18;
+  font-family: "Poppins", sans-serif;
+
+}
+.main .panelprincipanl .ppheader .pph3 .h31{
+  background-color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+
+}
+
+/* botones "<>"de  estan en una clase div pb */
+.main .panelprincipanl .ppheader .pb{
+ gap: 8px;
+ font-size: 1.5rem;
+  display: flex;
+  justify-content: end;
+background-color: rgb(238, 214, 183);
+margin: 5px;
+font-family: "Poppins", sans-serif;
+align-items: center;
+}  
+
+
+
+
+/* Panel de productos */
+
+.ppmain {
+  width: 100%;
+  
+}
+
+
+.ppmain .cont-productos{
+  /* background-color: #bbb; */
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;          /* Permite que los elementos bajen si desbordan */
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.ppmain .cont-productos .producto {
+  width: 16.1rem;
+  height: 22rem;
+  margin: 1rem;
+  padding: none;
+  background-color: #ffffff;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  /* Transición suave */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ppmain .cont-productos .producto:hover {
+  /* Agrandamiento */
+  transform: scale(1.05);
+
+  /* Sombra */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.ppmain .cont-productos .producto .porcentaje{
+ 
+ width: auto;
+ height: auto;
+  background-color:#d90529; /*color establecido*/
+  padding: 0.4rem 1rem 0.4rem  1rem;
+  color: aliceblue;
+ position: absolute;
+ left: 0rem;
+ top: 1.1rem;
+ font-size: 0.8rem;
+ font-weight: 550; /* Aplica negrita */
+font-family: "Poppins", sans-serif;
+}
+
+
+
+.ppmain .cont-productos .producto .apro{
+  /* width: 100%;
+ height: 100%; */
+/* background-color:red; */
+margin: 0rem 0rem 0rem 0rem;
+
+ /* width: 15rem; */
+ width: 16.1rem;
+ height: 15rem;
+overflow: hidden;
+}
+
+.ppmain .cont-productos .producto .apro .img-p{
+  width: 100%;
+ height: 100%;
+  /* background-color: #46a032; */
+   /* width:15rem;
+   height: 15rem; */
+   /* object-fit: scale-down;
+   object-fit: fill; */
+   object-fit: contain;
+
+  }
+
+
+ 
+.ppmain .cont-productos .producto .titulo-p{
+/* background-color: #46a032; */
+width: auto;
+ height: auto;
+  font-size: 1rem;
+  color: #333333;
+  font-family: "Poppins", sans-serif;
+  font-weight: 510;
+  font-style: normal;
+  overflow: hidden;
+  }
+
+
+.ppmain .cont-productos .producto .corazon {
+
+}
+
+/* div de precio */
+
+.ppmain .cont-productos .producto .pprecio {
+  width: auto;
+ height: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.3rem;
+  text-align: center;
+ align-items: center;
+ justify-content: center;
+ /* background-color: aqua; */
+ display: flex ;
+
+}
+
+
+
+.ppmain .cont-productos .producto .pprecio p{
+  width: auto;
+ height: auto;
+  background-color: #ffffff;
+  color:#ff002c;
+  margin: 0 0.24rem 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
+.ppmain .cont-productos .producto .pprecio .pp{
+  width: auto;
+ height: auto;
+  background-color: #ffffff;
+  color:#bbb;
+    text-decoration: line-through; /* Tacha el texto */
+  margin: 0 0.5rem 0 0;
+  font-size: 14px;
+  font-weight: 600;
+ font-family: "Poppins", sans-serif;
+}
+
+
+
+/* termina div de precio */
+.ppmain .cont-productos .producto .productoboton {
+  width: auto;
+ height: auto;
+  /* background-color: #ffe600; */
+  padding:  0.1rem 0 0 1rem;
+  font-size: 14px;
+  font-weight: 600;
+ font-family: "Poppins", sans-serif;
+ color: #ffffff;
+
+ 
+ 
+
+}
+
+.productoboton .boton-p{
+
+  width: auto;
+ height: auto;
+  background-color: #ff002c;
+  overflow: hidden;
+  position: relative;
+  width: 170px;
+  height: 40px;
+  align-items: center;
+  display: block;
+  border-radius: 0.3rem;
+}
+
+
+.productoboton   .boton-p .pt{
+  width: auto;
+  width: auto;
+padding: 0.55rem 0 0 0;
+  background-color: #ff002c;
+font-size: 0.85rem;
+transition: transform 250ms;
+  }
+
+  .boton-p:hover .pt{
+    transform:translateY(-30px);
+    transition: 250ms;
+  }
+  
+
+   .boton-p:hover .iconp{
+   top: 0.355rem;
+
+  }
+
+  .productoboton  .boton-p svg{
+    background-color: #ff002c;
+    border-radius: 1rem;
+    position: absolute;
+    left: 0;
+    width: 30px;
+    top: 3rem;
+  left: 4.45rem;
+
+    transition: top .2s;
+     }
+
+ 
+
+
+
+
+
+
+     /* PANEL DE VENTA 2 CON LISTADO ARRIBA  */
+
+.panelventa22{
+  width:auto;
+background-color: #322828;
+margin: 0 10rem 0 10rem;
+}
+
+/* hearder */
+.panelventa22 .pv2-header{
+  width: 100%;
+  background-color: #46a032;
+  height: auto;
+  position: relative;/* display: none; */
+  z-index: 1;  /* display: none; */
+
+}
+
+
+.panelventa22 .pv2-header .pv2-text{
+width: 100%;
+background-color: #db5959;
+display:flex;
+justify-content: space-between;
+font-size: 30px;
+font-weight: 600;
+font-family: "Poppins", sans-serif;
+color: #333333;
+align-items: center;
+/* padding: 2rem; */
+
+}
+
+.pv2-header .pv2-text .lados2{
+background-color: #bbb;
+align-items: center;
+padding: 1rem 0 1rem 0rem;
+display: flex;
+gap: 20px;
+}
+
+
+.pv2-header .pv2-text .lados2 a{
+  background-color: #46a032;
+  font-size: 60px;
+
+
+  }
+
+
+.pv2-header .pv2-text .span2{
+  color: #242424;
+  background-color: #ffffff;
+  margin-bottom:2px;
+  font-size: 1.5rem;
+}
+
+
+.hrpv2{
+  background-color: aqua;
+  width: 100%;
+  height: 0.1rem;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+
+/* parte del hearder 2 listas */
+
+.panelventa2-lista{
+background-color: aqua;
+font-size: 0.8rem;
+font-weight: 600;
+font-family: "Poppins", sans-serif;
+position: absolute;/* display: none; */
+z-index: 10;/* display: none; */
+left: 22%;
+top: 30%;
+}
+
+.panelventa2-lista .ul-pv2{
+display: flex;
+padding: 0 0 0 2rem;
+gap: 30px;
+align-items: center;  
+}
+
+
+.panelventa2-lista .ul-pv2 .list-p2{
+  color: #333333;
+  display: flex;         
+}
+
+
+
+
+@media screen and (max-width: 1000px)  {
+  .panelventa2-lista{
+    position: static;/* display: none; */
+    }
+    .panelventa22 .pv2-header{
+      position: static;/* display: none; */
+    
+    }
+
+
+    
+
+
+  }
+
+  @media screen and (max-width: 485px){
+
+    .panelventa2-lista .ul-pv2{
+      display:block;
+      padding: 0 0 0 3rem;
+      gap: 50px;
+      align-items: center; 
+      text-align: center;
+      } 
+
+
+  }
+
+
+
+
+
+
+
+
+/* productos pv2 */
+
+
+.panelventa2-main{
+  width: 100%;
+}
+
+
+.cont-productospv2{
+  background-color: #bbb;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;          /* Permite que los elementos bajen si desbordan */
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cont-productospv2 .productopv2{
+  width: 12rem;
+  height: 19.5rem;
+margin: 1rem 0 0  0.4rem;
+background-color: #ffffff;
+text-align: center;
+justify-content: center;
+position: relative;
+/* overflow: hidden; */
+}
+
+.cont-productospv2 .productopv2 .porcentajepv2{
+ 
+ width: auto;
+ height: auto;
+  background-color:#d90529; /*color establecido*/
+  padding: 0 0.1rem 0  0.1rem;
+  color: aliceblue;
+ position: absolute;
+ left: 0rem;
+ top: 1.1rem;
+ font-size: 0.8rem;
+ font-weight: 550; /* Aplica negrita */
+font-family: "Poppins", sans-serif;
+}
+
+
+
+.cont-productospv2 .productopv2 .apropv2{
+  width: auto;
+ height: auto;
+background-color:red;
+margin: 0rem 0rem 0rem 0rem;
+ width: 12rem;
+ height: 12rem;
+
+}
+
+.cont-productospv2 .productopv2 .apropv2 .img-ppv2{
+
+  background-color: #46a032;
+   width:12rem;
+   height: 12rem;
+   object-fit: contain;
+  }
+
+
+ 
+.cont-productospv2 .productopv2 .titulo-ppv2{
+/* background-color: #46a032; */
+width: auto;
+ height: auto;
+  font-size: 1rem;
+  color: #333333;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  overflow: hidden;
+  }
+
+
+.cont-productos .producto .corazon {
+
+}
+
+/* div de precio */
+
+.cont-productospv2 .productopv2 .ppreciopv2 {
+  width: auto;
+ height: auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.3rem;
+  text-align: center;
+ align-items: center;
+ justify-content: center;
+ /* background-color: aqua; */
+ display: flex ;
+
+}
+
+
+.cont-productospv2 .productopv2 .ppreciopv2 p{
+  width: auto;
+ height: auto;
+  background-color: #ffffff;
+  color:#ff002c;
+  margin: 0 0.24rem 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+}
+
+
+.cont-productospv2 .productopv2 .ppreciopv2 .pppv2{
+  width: auto;
+ height: auto;
+  background-color: #ffffff;
+  color:#bbb;
+    text-decoration: line-through; /* Tacha el texto */
+  margin: 0 0.5rem 0 0;
+  font-size: 14px;
+  font-weight: 600;
+ font-family: "Poppins", sans-serif;
+}
+
+
+
+/* termina div de precio */
+.cont-productospv2 .productopv2 .productobotonpv2 {
+  width: auto;
+ height: auto;
+  background-color: #ffe600;
+  padding:  0.4rem 0 0 0.78rem;
+  font-size: 14px;
+  font-weight: 600;
+ font-family: "Poppins", sans-serif;
+ color: #ffffff;
+ 
+}
+
+.productobotonpv2 .boton-ppv2{
+
+  width: auto;
+ height: auto;
+  background-color: #ff002c;
+  overflow: hidden;
+  position: relative;
+  width: 170px;
+  height: 40px;
+  align-items: center;
+  display: block;
+  border-radius: 0.3rem;
+}
+
+
+.productobotonpv2 .boton-ppv2 .ptpv2{
+  width: auto;
+  width: auto;
+padding: 0.55rem 0 0 0;
+  background-color: #ff002c;
+font-size: 0.85rem;
+transition: transform 250ms;
+  }
+
+  .boton-ppv2:hover .ptpv2{
+    transform:translateY(-30px);
+    transition: 250ms;
+  }
+  
+
+   .boton-ppv2:hover .iconppv2{
+   top: 0.355rem;
+
+  }
+
+  .productobotonpv2  .boton-ppv2 svg{
+    background-color: #ff002c;
+    border-radius: 1rem;
+    position: absolute;
+    left: 0;
+    top: 3rem;
+    width: 30px;
+    left: 4.45rem;
+
+
+
+
+    transition: top .2s;
+     }
+/*fin de pv2  */
+ @media screen and (max-width: 1525px) {
+  .panelventa22{
+  margin: 0 0 0 0;
+  }
+ }
+
+
+
+     /* FIN DE PANEL DE VENTA 2 LSITADO ARRIBA */
+
+
+
+
+
+
+
+  .check{
+    background-color: #ffffff;
+    margin-top: 3rem;
+  margin-bottom: 3rem;
+  }
+
+
+
+
+
+
+
+  .check .conteiner-check{
+    display: flex;  /* cmabiar ne pixel */
+    flex-flow:wrap;
+    background-color: #ff002c;
+  }
+
+
+
+
+
+
+
+  .check .checkG{
+    background-color: #ff002c;
+    font-size: 14px;
+  font-weight: 600;
+ font-family: "Poppins", sans-serif;
+ display:flex;
+ color:#ffffff;
+ gap: 20px;
+ padding: 2.5rem 3.5rem 2.5rem 3.8rem;
+ border-color: rgba(255, 255, 255, 0.486);
+ border-style: solid;
+ border-width: 0px 0.5px 0px 0px;
+
+} 
+  
+
+
+
+  .check  .checkG .checkGGico{
+background-color: #322828;
+padding: 2rem;
+  }
+
+  .check  .checkG .checkGGico .svg-check {
+    
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+      }
+
+
+  .check .checkG .checkGG{
+     display:block;  
+       gap: 1rem;
+      }
+
+
+  .check .checkG .checkGG span{
+  
+  }
+
+  .check .checkG .checkGG p{
+    font-weight: 200;
+    font-size: 0.8rem;
+  }
+
+
+
+  /* Nueva Practica */
+
+  .ofertas-container {
+    position: relative;
+    margin: 20px auto;
+    max-width: 1400px;
+    font-family: "Poppins", sans-serif;
+    background-color: #ffffff;
+}
+
+.ofertas-container .section-title {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    display: flex;
+  
+
+}
+
+.ofertas-container .section-title svg {
+width: 30px; 
+color: #e4190a;
+margin-left: 10px;
+}
+
+.ofertas-container .hero-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.ofertas-container .hero-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.ofertas-container .hero-slide {
+    min-width: 100%;
+    position: relative;
+}
+
+.ofertas-container .hero-slide img {
+    width: 50%;
+    display: block;
+    width:200rem;
+   height: 35rem;
+ 
+}
+
+.ofertas-container .hero-slide .bg-gradient-to-t {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+.ofertas-container .hero-slide .text-white {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    color: #fff;
+
+}
+
+.ofertas-container .hero-navigation {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.ofertas-container .hero-nav-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: #fff;
+    padding: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius:20px ;
+}
+
+.ofertas-container .hero-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.ofertas-container .ofertin{
+  position: absolute;
+  top: 12%;
+  width: 100%;
+  display: flex;
+
+ transform:translateX(90%);
+  z-index: 10;
+}
+
+
+
+
+
+/* Carrosel */
+ .sliderCARRUSEL {
+  width: 100vw;
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  justify-content: center;
+  align-items: center;
+
+} 
+
+
+
+.sliderCARRUSEL .text-2xl {
+  
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+   margin-bottom: 1rem; 
+
+} 
+  .sliderCARRUSEL .slide-track {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  -webkit-animation: scroll 40s linear infinite;
+  width: calc(350px * 14);
+}
+
+.sliderCARRUSEL .slide {
+  width: 350px;
+}
+
+.sliderCARRUSEL .slide img {
+  width: 100%;
+} 
+
+@keyframes scroll {
+  0% {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+  }
+  100% {
+      -webkit-transform: translateX(calc(-350px * 7));
+      transform: translateX(calc(-350px * 7));
+  }
+}
+/* Fin/Carrusel */
+
+
+/* slick */
+
+.slick-carousel .productopv2 {
+  margin: 10px; /* Ajusta el margen entre tarjetas */
+}
+
+.slick-dots {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.slick-prev, .slick-next {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.slick-prev:hover, .slick-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* slider  */
+
+
+/* Slider Contenedor y Ajustes de Fondo */
+.product-slider {
+  width: 80vw;
+  height: auto;
+margin-left: 15rem;
+  position: relative;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* background-color: #b69a9a; */
+}
+
+/* Título del Slider */
+.product-slider-heading {
+  font-size: 28px;
+  text-transform: uppercase;
+  color: #313131;
+  margin-bottom: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+
+}
+
+/* Contenedor del Slider */
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Contenedor de cada Producto */
+.product-box {
+  /* background-color: #333; */
+  width: 100%;
+  max-width: 100%; /* Ajusta el tamaño máximo de cada producto */
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+ 
+}
+
+/* Hover sobre los productos */
+.product-box:hover {
+  transform: scale(1.05); /* Da un pequeño efecto de aumento */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Añade una sombra al hacer hover */
+}
+
+/* Contenedor de Imágenes */
+.product-img-container {
+  position: relative;
+  /* background-color: #04ca32; */
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  /* background-color: #46a032; */
+  display: flex; /* Activa Flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  text-align: center;
+  text-align: center;
+
+  /* margin-left: 5rem; */
+}
+
+
+/* Imagen del Producto */
+.product-img a img {
+ /* width: 100%; */
+  /* height: 100%; */
+  object-fit: contain; /* Asegura que la imagen cubra el contenedor */
+  object-position: center;
+  
+  transition: transform 0.3s ease;
+  /* width: 80%; */
+  
+  
+  /* margin-left: 3rem; */
+  /* height: 12rem; */
+  position: absolute;
+  top: 50%; /* Mueve al 50% desde arriba */
+  left: 50%; /* Mueve al 50% desde la izquierda */
+  transform: translate(-50%, -50%); /* Centra ajustando el punto de referencia */
+
+  
+
+}
+
+/* Hover sobre la imagen */
+.product-img-container:hover .product-img-front {
+  /* transform: scale(1.2);  */
+  transform: translate(-50%, -60%);
+}
+
+/* Oferta en el Producto */
+.product-box-offer {
+  position: absolute;
+  top: 19px;
+  left: 0px;
+  padding: 10px 30px;
+  background-color:  #ff002c;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+  text-transform: uppercase;
+  z-index: 1;
+  font-family: "Poppins", sans-serif;
+
+}
+
+/* Título del Producto */
+.product-title {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  /* background-color: #46a032; */
+  text-decoration: none;
+  display: inline-block;
+  width: 250px; /* Ancho máximo del contenedor */
+  white-space: nowrap; /* Evita saltos de línea */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transiciones suaves */
+}
+
+/* Solo aplica truncamiento y desplazamiento a los textos largos */
+.product-title.long-text:hover {
+  transform: translateX(-100%); /* Desplaza el texto completo */
+  transition: transform 5s linear; /* Transición más fluida y rápida */
+}
+
+
+/* Hover sobre el título */
+.product-title:hover {
+  opacity: 0.7;
+}
+
+/* Categoría del Producto */
+.product-category {
+text-align: initial;
+  font-size: 14px;
+  color: #acacac;
+  margin: 5px 0px 0px 25px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Contenedor de Precio y Botón de Compra */
+.price-buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-family: "Poppins", sans-serif;
+
+}
+
+.price-buy .p-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ff002c;
+}
+
+/* oreciuo secundario */
+.price-buy .p-price-secundary {
+  font-size: 18px;
+  font-weight: 700;
+  color: #bbb;
+  text-decoration: line-through; /* Tacha el texto */
+  margin-left: 8px;
+}
+
+.price-buy .p-buy-btn {
+  font-size: 14px;
+  color: #e63b3b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.product-box-text {
+  margin-right: 5px;
+  overflow: hidden;
+}
+
+.price-buy .p-buy-btn:hover {
+  text-decoration: underline;
+}
+
+/* Configuración del Slider */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 60%;
+  z-index: 6;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0%;
+  padding: 10px;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(13, 80, 90, 0.295); /* Efecto hover */
+}
+
+.productoboton {
+  justify-content: center;
+  width: 80%;
+
+  /* background-color: #ffe600; */
+  padding: 0.4rem 0 0 1.8rem;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+
+  /* overflow: hidden; */
+}
+
+.productoboton .boton-p {
+  width: auto;
+  height: auto;
+  background-color: #ff002c;
+  overflow: hidden;
+  position: relative;
+  width: 170px;
+  height: 40px;
+  margin-left: 27px;
+  align-items: center;
+  display: block;
+  border-radius: 0.3rem;
+  text-decoration: none;
+}
+
+.productoboton .boton-p .pt {
+  width: auto;
+  width: auto;
+  padding: 0.55rem 0 0 0;
+  background-color: #ff002c;
+  font-size: 0.85rem;
+  transition: transform 250ms;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+
+}
+
+.productoboton .boton-p .pt {
+justify-content: center;
+align-items: center;
+text-align: center;
+/* transform: translateY(-10px); */
+
+}
+
+.boton-p:hover .pt {
+  transform: translateY(-40px);
+  transition: 250ms;
+  color: #ffffff;
+}
+
+.boton-p .iconp {
+  color: #ffffff;
+
+}
+
+.boton-p:hover .iconp {
+  top: 0.355rem;
+  color: #ffffff;
+}
+
+.productoboton .boton-p svg {
+  background-color: #ff002c;
+  border-radius: 1rem;
+  position: absolute;
+  left: 0;
+  width: 30px;
+  top: 3rem;
+  left: 4.45rem;
+
+  transition: top 0.2s;
+}
+
+@media (max-width: 768px) {
+  .product-slider-heading {
+    font-size: 22px;
+  }
+
+  .swiper-container {
+    width: 100%;
+  }
+
+  .product-box {
+    max-width: 90%; /* Hace que los productos se ajusten en pantallas pequeñas */
+  }
+
+  .product-img-container {
+    height: 250px; /* Reduce la altura de las imágenes en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 500px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none; /* Oculta los botones de navegación en pantallas pequeñas */
+  }
+}
+/* fin de slider */
+
+
+@media (max-width: 1600px) {
+  .product-slider {
+   
+  margin-left: 8rem;
+  
+    /* background-color: #b69a9a; */
+  }
+
+}
+
+
+@media (max-width: 1490px) {
+  .product-slider {
+   
+  margin-left: 5rem;
+  
+    /* background-color: #b69a9a; */
+  }
+
+}

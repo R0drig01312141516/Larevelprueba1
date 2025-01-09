@@ -1,0 +1,172 @@
+/* General Layout */
+.section-title {
+    margin-bottom: 1.2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Estilos para la hero section con parallax */
+.hero-one {
+    height: 60vh;
+    max-height: 500px;
+    background-image: url('/storage/img/inicio/banner-home.webp');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero-content {
+    text-align: center;
+    color: black;
+    padding: 1rem;
+    background-color: rgb(255 255 255 / 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Hero Section Styles */
+.hero-section {
+    background-color: white;
+}
+
+.hero-container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 15px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.hero-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    position: absolute; /* Añadido */
+    top: 0;           /* Añadido */
+    left: 0;          /* Añadido */
+    width: 100%;      /* Añadido */
+    height: 100%;     /* Añadido */
+}
+
+.hero-slide {
+    min-width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease-in-out;
+    position: relative;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 15px;
+}
+
+/* Hero Navigation */
+.hero-navigation {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.hero-nav-btn {
+    background: #333;
+    color: white;
+    border-radius: 50%;
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .hero-nav-btn {
+        margin: 5px;
+    }
+}
+
+
+
+/* Featured Products Section */
+.slider-container {
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.slider-wrapper{
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: auto;
+}
+
+/* Slick carousel customization */
+.slick-prev,
+.slick-next {
+    z-index: 1;
+    background: #333;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+    background: #333;
+}
+
+.slick-prev:focus,
+.slick-next:focus {
+    background: #333;
+}
+
+.slick-prev::before,
+.slick-next::before {
+    display: none;
+}
+
+.slick-prev {
+    left: 0px;
+}
+
+.slick-next {
+    right: 0px;
+}
+
+/* Estilos para los íconos */
+.nav-btn {
+    color: white;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 640px) {
+    .slider-container {
+        padding: 0;
+    }
+}
+
+
+.slick-slide {
+    margin: 0px;
+}

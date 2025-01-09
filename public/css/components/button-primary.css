@@ -1,0 +1,15 @@
+.button-primary {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-text);
+    color: var(--color-white);
+    border: 1px solid var(--color-text);
+    text-decoration: none;
+    width: fit-content;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.button-primary:hover {
+    background-color: var(--color-white);
+    color: var(--color-text);
+}

@@ -1,0 +1,24 @@
+.button-secondary {
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: var(--blue-flameburst-white);
+    color: var(--blue-flameburst-black);
+    outline: 1px solid var(--blue-flameburst-black);
+
+    display: flex;
+    width: calc(50% + 1rem);
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+
+    transition: all 0.3s ease;
+}
+
+.button-secondary:hover {
+    background-color: var(--blue-flameburst-blue);
+    color: var(--blue-flameburst-white);
+    outline: none;
+    cursor: pointer;
+}
