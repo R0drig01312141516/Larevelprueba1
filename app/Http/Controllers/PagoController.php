@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
+use MercadoPago\SDK;
+use MercadoPago\Preference;
+use MercadoPago\Item;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PagoController extends Controller
@@ -82,6 +85,86 @@ class PagoController extends Controller
         }
     }
 
+    public function mercadoPago(Request $request)
+    {
+        try {
+            $items = $this->getCartContent();
+
+            $disponibilidad = $this->checkAvailability($items);
+            if (!$disponibilidad['success']) {
+                return response()->json(['error' => $disponibilidad['mensaje']], 400);
+            }
+
+            $stock = $this->checkStock($items);
+            if (!$stock['success']) {
+                return response()->json(['error' => $stock['mensaje']], 400);
+            }
+
+            // Configurar el SDK con el token de acceso
+            SDK::setAccessToken(config('services.mercadopago.access_token'));
+
+            // Crear una nueva preferencia de pago
+            $preference = new Preference();
+
+            $cartItems = [];
+            foreach ($items as $item) {
+                $product = new Item();
+                $product->title = $item->name;
+                $product->quantity = $item->qty;
+                $product->unit_price = $this->solesToUSD($item->price); // Asegúrate de que esta función existe y funciona correctamente
+                $cartItems[] = $product;
+            }
+
+            $preference->items = $cartItems;
+            $preference->back_urls = [
+                "success" => route('mercadopago.success'),
+                "failure" => route('mercadopago.cancel'),
+                "pending" => route('mercadopago.pending')
+            ];
+            $preference->auto_return = "approved";
+            $preference->save();
+
+            return response()->json([
+                'id' => $preference->id,
+                'init_point' => $preference->init_point,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'No se pudo iniciar el proceso de pago.'], 500);
+        }
+    }
+
+    public function mercadoPagoSuccess(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $items = $this->getCartContent();
+
+            $this->createSaleMP($request->all(), $items);
+            $this->updateStock($items);
+
+            DB::commit();
+            Cart::destroy();
+            if (Auth::guard('cliente')->check()) {
+                Cart::store(Auth::guard('cliente')->id());
+            }
+
+            session()->forget('tipo_cambio');
+            session()->forget('total_soles');
+
+            return view('payout.success', ['transaccion_id' => $request->preference_id]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error('Error al procesar la venta: ' . $e->getMessage());
+            return redirect()->route('mercadopago.cancel')
+                ->with('error', 'Ocurrió un error al procesar la venta. Por favor, contacte a soporte.');
+        }
+    }
+
+    public function mercadoPagoCancel()
+    {
+        return view('payout.error');
+    }
     public function success(Request $request)
     {
         $provider = $this->initializePayPalProvider();
@@ -109,17 +192,12 @@ class PagoController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error('Error al procesar la venta: ' . $e->getMessage());
-                return redirect()->route('comprar.cancel')
+                return redirect()->route('mercadopago.cancel')
                     ->with('error', 'Ocurrió un error al procesar la venta. Por favor, contacte a soporte.');
             }
         }
 
-        return redirect()->route('comprar.cancel')->with('error', 'El pago no pudo ser procesado.');
-    }
-
-    public function cancel()
-    {
-        return view('payout.error');
+        return redirect()->route('mercadopago.cancel')->with('error', 'El pago no pudo ser procesado.');
     }
 
     protected function checkAvailability($cartItems)
@@ -180,6 +258,25 @@ class PagoController extends Controller
             'estado' => 'Por recoger',
             'transaccion_id' => $response['id'],
             'payer_email' => $response['payer']['email_address']
+        ]);
+
+        $this->createSaleDetails($venta, $items);
+    }
+
+    private function createSaleMP($response, $items)
+    {
+        $cliente = Auth::guard('cliente')->user();
+
+        $venta = Venta::create([
+            'cliente_id' => $cliente->id,
+            'total' => session()->get('total_soles'),
+            'fecha' => now(),
+            'metodo_pago' => 'Mercado Pago',
+            'tipo_cambio' => session()->get('tipo_cambio'),
+            'total_dolares' => $this->solesToUSD(session()->get('total_soles')),
+            'estado' => 'Por recoger',
+            'transaccion_id' => $response['preference_id'],
+            'payer_email' => $response['payer']['email']
         ]);
 
         $this->createSaleDetails($venta, $items);

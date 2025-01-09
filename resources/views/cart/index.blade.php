@@ -18,44 +18,36 @@
             <section class="carrito-productos">
                 <article class="cart-card productos-card">
                     @foreach ($items as $item)
-                                <div class="carrito-producto max-w-full">
+                        <div class="carrito-producto max-w-full">
+                            @php
+                                $producto = App\Models\Producto::findOrFail($item->id);
+                            @endphp
+                            <a href="{{ route('producto.show', [$producto->categoria, $producto]) }}" class="producto-imagen">
+                                <form action="{{ route('carrito.eliminar', $item->rowId) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="producto-quitar"><i class="fa-solid fa-xmark"></i></button>
+                                </form>
+                                <img src="{{ Storage::url($item->options->url_imagen) }}" alt="{{ $item->name }}" class="border border-gray-200 rounded-md">
+                            </a>
+                            <div class="producto-info truncate">
+                                <a href="{{ route('producto.show', [$producto->categoria, $producto]) }}" class="text-xl font-bold truncate">{{ $item->name }}</a>
+                                <p>Precio: <span>S/{{ $producto->precio }}</span></p>
+                                <p class="13s">Codigo: <span>{{ $producto->codigo }}</span></p>
+                                <p>Talla: <span>{{ $item->options->talla }}</span></p>
+                                <p>Cantidad:
+                                <form action="{{ route('carrito.actualizar', $item->rowId) }}" method="POST" class="carrito-actualizar">
+                                    @csrf
                                     @php
-                                        $producto = App\Models\Producto::findOrFail($item->id);
+                                        $talla = $item->options->talla;
+                                        $cantidadDisponible = $producto->tallas()->where('tallas.talla', $talla)->first()->pivot->cantidad;
                                     @endphp
-                                    <a href="{{ route('producto.show', [$producto->categoria, $producto]) }}" class="producto-imagen">
-                                        <form action="{{ route('carrito.eliminar', $item->rowId) }}" method="POST"
-                                            style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="producto-quitar"><i class="fa-solid fa-xmark"></i></button>
-                                        </form>
-                                        <img src="{{ Storage::url($item->options->url_imagen) }}" alt="{{ $item->name }}" class="border border-gray-200 rounded-md">
-                                    </a>
-                                    <div class="producto-info truncate">
-                                        <a href="{{ route('producto.show', [$producto->categoria, $producto]) }}"
-                                            class="text-xl font-bold truncate">{{ $item->name }}</a>
-                                        <p>Precio: <span> S/{{ $producto->precio }}</span></p>
-                                        <p  class="13s">Codigo: <span>{{ $producto->codigo }}</span></p>
-                                        <p>Talla: <span>{{ $item->options->talla }}</span></p>
-                                        <p>Cantidad:
-                                        <form action="{{ route('carrito.actualizar', $item->rowId) }}" method="POST"
-                                            class="carrito-actualizar">
-                                            @csrf
-                                            @php
-                                                $talla = $item->options->talla;
-                                                $cantidadDisponible = $producto
-                                                    ->tallas()
-                                                    ->where('tallas.talla', $talla)
-                                                    ->first()->pivot->cantidad;
-                                            @endphp
-                                            <input type="number" name="cantidad" value="{{ $item->qty }}" min="1"
-                                                max="{{ min($cantidadDisponible, 5) }}" class="cantidad-input" required>
-                                            <x-button-secondary type="submit" class="truncate max-w-full">Actualizar</x-button-secondary>
-                                        </form>
-                                        </p>
-                                    </div>
-
-                                </div>
+                                    <input type="number" name="cantidad" value="{{ $item->qty }}" min="1" max="{{ min($cantidadDisponible, 5) }}" class="cantidad-input" required>
+                                    <x-button-secondary type="submit" class="truncate max-w-full">Actualizar</x-button-secondary>
+                                </form>
+                                </p>
+                            </div>
+                        </div>
                     @endforeach
                 </article>
                 <div class="carrito-footer mt-4">
@@ -73,31 +65,37 @@
                         <h2 class="text-xl font-bold text-gray-900">Resumen</h2>
                     </div>
                     <div class="resumen-info">
-                        <p class="resumen-text font-bold">Subtotal: <span
-                                class="font-normal">S/{{ number_format($resumen['subtotal'], 2) }}</span></p>
-                        <p class="resumen-text font-bold">IGV (Incluido): <span
-                                class="font-normal">S/{{ number_format($resumen['igv'], 2) }}</span></p>
-                        <p class="resumen-text font-bold"><a href="{{ route('envios') }}" class="underline">Envio:</a><span
-                                class="font-normal">Recoger en tienda</span></p>
+                        <p class="resumen-text font-bold">Subtotal: <span class="font-normal">S/{{ number_format($resumen['subtotal'], 2) }}</span></p>
+                        <p class="resumen-text font-bold">IGV (Incluido): <span class="font-normal">S/{{ number_format($resumen['igv'], 2) }}</span></p>
+                        <p class="resumen-text font-bold"><a href="{{ route('envios') }}" class="underline">Envio:</a><span class="font-normal">Recoger en tienda</span></p>
                     </div>
                     <div class="resumen-footer">
-                        <p class="resumen-text font-bold">Total: <span
-                                class="font-normal">S/{{ number_format($resumen['total'], 2) }}</span></p>
+                        <p class="resumen-text font-bold">Total: <span class="font-normal">S/{{ number_format($resumen['total'], 2) }}</span></p>
                         <div class="resumen-buttons">
                             <form action="{{ route('comprar.paypal') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="total" value="{{ $resumen['total'] }}">
-
                                 @foreach ($items as $item)
                                     <input type="hidden" name="product_names[]" value="{{ $item->name }}">
                                     <input type="hidden" name="quantities[]" value="{{ $item->qty }}">
                                 @endforeach
-
                                 <button class="btn-comprar" type="submit">
-                                    <span class="btn-text">Comprar</span>
+                                    <span class="btn-text">Comprar con PayPal</span>
                                     <span class="btn-icon"><i class="fa-solid fa-cart-shopping"></i></span>
                                 </button>
                             </form>
+
+                            <!-- Formulario para Mercado Pago -->
+                            <form id="mercadoPagoForm" action="{{ route('mercadopago.createPreference') }}" method="POST">
+                                @csrf
+                                <input type="hidden" id="preferenceId" name="preference_id" value="">
+                                <input type="hidden" name="total" value="{{ $resumen['total'] }}">
+                                <button class="btn-comprar" type="submit">
+                                    <span class="btn-text">Comprar con Mercado Pago</span>
+                                    <span class="btn-icon"><i class="fa-solid fa-cart-shopping"></i></span>
+                                </button>
+                            </form>
+
                             <a class="btn-continuar" href="{{ route('productos') }}">Seguir Comprando</a>
                         </div>
                     </div>
@@ -108,11 +106,8 @@
         <div class="rounded-md bg-blue-50 p-4">
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clip-rule="evenodd" />
+                    <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                     </svg>
                 </div>
                 <div class="ml-3">
@@ -127,6 +122,40 @@
         </div>
     @endif
 </div>
+
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const mp = new MercadoPago('{{ config('services.mercadopago.public_key') }}');
+
+    document.getElementById('mercadoPagoForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const preferenceId = document.getElementById('preferenceId').value;
+
+        mp.checkout({
+            preference: {
+                id: preferenceId
+            },
+            autoOpen: true // Abre la ventana de pago automáticamente
+        });
+    });
+
+    // Crear preferencia de pago
+    fetch('{{ route('mercadopago.createPreference') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            title: 'Compra en tienda', // Puedes ajustar el título según sea necesario
+            quantity: 1, // Cantidad fija para toda la compra
+            price: {{ $resumen['total'] }}
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('preferenceId').value = data.id;
+    });
+</script>
 @endsection
-
-

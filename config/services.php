@@ -39,6 +39,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    
+    'mercadopago' => [
+        'access_token' => env('MP_ACCESS_TOKEN'),
+        'public_key' => env('MP_PUBLIC_KEY'),
+    ],
 
 ];
