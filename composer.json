@@ -8,9 +8,10 @@
         "php": "^8.2",
         "doctrine/dbal": "^4.2",
         "egulias/email-validator": "^4.0",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "mercadopago/dx-php": "^3.0",
+        "mercadopago/dx-php": "3.0.7",
         "moonshine/moonshine": "^2.23",
         "srmklive/paypal": "~3.0",
         "surfsidemedia/shoppingcart": "^1.0"

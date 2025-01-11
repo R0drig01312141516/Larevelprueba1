@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
-use MercadoPago\SDK;
-use MercadoPago\Preference;
-use MercadoPago\Item;
+use MercadoPago\Resources\Preference;
+use MercadoPago\Resources\Item;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+
+use MercadoPago\MercadoPagoConfig;
+use MercadoPago\Client\Preference\PreferenceClient;
+use MercadoPago\Exceptions\MPApiException;
 
 class PagoController extends Controller
 {
@@ -87,52 +90,77 @@ class PagoController extends Controller
 
     public function mercadoPago(Request $request)
     {
+        Log::info('Datos recibidos:', $request->all());
+    
         try {
             $items = $this->getCartContent();
-
+    
             $disponibilidad = $this->checkAvailability($items);
             if (!$disponibilidad['success']) {
                 return response()->json(['error' => $disponibilidad['mensaje']], 400);
             }
-
+    
             $stock = $this->checkStock($items);
             if (!$stock['success']) {
                 return response()->json(['error' => $stock['mensaje']], 400);
             }
-
-            // Configurar el SDK con el token de acceso
-            SDK::setAccessToken(config('services.mercadopago.access_token'));
-
-            // Crear una nueva preferencia de pago
-            $preference = new Preference();
-
-            $cartItems = [];
+    
+            // Inicializar el SDK de Mercado Pago
+            MercadoPagoConfig::setAccessToken(config('services.mercadopago.access_token'));
+    
+            // Crear la lista de productos
+            $productItems = [];
             foreach ($items as $item) {
-                $product = new Item();
-                $product->title = $item->name;
-                $product->quantity = $item->qty;
-                $product->unit_price = $this->solesToUSD($item->price); // Asegúrate de que esta función existe y funciona correctamente
-                $cartItems[] = $product;
+                $productItems[] = [
+                    "id" => $item->id,
+                    "title" => $item->name,
+                    "quantity" => $item->qty,
+                    "unit_price" => $this->solesToUSD($item->price),
+                    "currency_id" => "PEN" // Cambiar a USD si trabajas con dólares
+                ];
             }
-
-            $preference->items = $cartItems;
-            $preference->back_urls = [
+    
+            // Configurar el payer (opcional, basado en sesión del cliente)
+            $payer = [
+                "email" => Auth::guard('cliente')->user()->email ?? "default@test.com"
+            ];
+    
+            // Configurar las URLs de retorno
+            $backUrls = [
                 "success" => route('mercadopago.success'),
                 "failure" => route('mercadopago.cancel'),
-                "pending" => route('mercadopago.pending')
+                "pending" => route('mercadopago.pending'),
             ];
-            $preference->auto_return = "approved";
-            $preference->save();
-
+    
+            // Crear la preferencia usando PreferenceClient
+            $client = new PreferenceClient();
+            $preferenceRequest = [
+                "items" => $productItems,
+                "payer" => $payer,
+                "back_urls" => $backUrls,
+                "auto_return" => "approved",
+                "external_reference" => uniqid(), // Único para rastrear la transacción
+            ];
+    
+            $preference = $client->create($preferenceRequest);
+    
+            // Retornar la respuesta con el ID y el link para iniciar el pago
             return response()->json([
                 'id' => $preference->id,
                 'init_point' => $preference->init_point,
             ]);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'No se pudo iniciar el proceso de pago.'], 500);
+    
+        } catch (MPApiException $e) {
+            Log::error('Error de API de Mercado Pago: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'No se pudo iniciar el proceso de pago.',
+                'details' => $e->getApiResponse()->getContent(),
+            ], 500);
+        } catch (\Exception $e) {
+            Log::error('Error general: ' . $e->getMessage());
+            return response()->json(['error' => 'Ocurrió un error.'], 500);
         }
     }
-
     public function mercadoPagoSuccess(Request $request)
     {
         try {
@@ -276,7 +304,7 @@ class PagoController extends Controller
             'total_dolares' => $this->solesToUSD(session()->get('total_soles')),
             'estado' => 'Por recoger',
             'transaccion_id' => $response['preference_id'],
-            'payer_email' => $response['payer']['email']
+            'payer_email' => $response['payer']['email'] ?? null
         ]);
 
         $this->createSaleDetails($venta, $items);
